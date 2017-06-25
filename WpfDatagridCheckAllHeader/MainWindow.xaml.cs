@@ -76,16 +76,19 @@ namespace WpfDatagridCheckAllHeader
             //loop through datagrid rows
             foreach (DataGridRow r in row)
             {
-                DataRowView rv = (DataRowView)r.Item;
-                foreach (DataGridColumn column in dgProducts.Columns)
+                if (r.Item != null)
                 {
-                    if (column.GetType().Equals(typeof(DataGridTemplateColumn)))
+                    DataRowView rv = (DataRowView)r.Item;
+                    foreach (DataGridColumn column in dgProducts.Columns)
                     {
-                        rv.Row["Discontinue"] = value;
+                        if (column.GetType().Equals(typeof(DataGridTemplateColumn)))
+                        {
+                            rv.Row["Discontinue"] = value;
 
-                        //LINQ or Database Method to Update Product discontinue status
-                        Connections.UpdateProductDiscontinue(value, rv.Row["productname"].ToString());
-                    }
+                            //LINQ or Database Method to Update Product discontinue status
+                            Connections.UpdateProductDiscontinue(value, rv.Row["productname"].ToString());
+                        }
+                    } 
                 }
             }
         }
